@@ -38,3 +38,51 @@ class Particle extends p5.Vector {
         return this.x <= w && this.y <= h && this.x >= 0 && this.y >= 0 ;
     }
 }
+
+class ParticleSystem {
+    constructor() {
+        this.particles = [];
+    }
+
+    add(particle) {
+        this.particles.push(particle);
+    }
+    
+    clear(width, height) {
+        for (var i = this.particles.length - 1; i >= 0; i--) {
+            if (this.particles[i].isPresent(width, height) === false) {
+                this.particles.splice(i,1);
+            }
+        }
+    }
+    
+    update(mouseParticle, staticMassiveParticles) {
+
+        for(var particle of this.particles) {
+        
+            particle.move();
+
+            var gravity = createVector(0, 9.81 ,0).mult(particle.mass);
+            particle.add(gravity);
+
+            mouseParticle.repusle(particle);
+            for(var staticMassiveParticle of staticMassiveParticles) {
+                staticMassiveParticle.repusle(particle);
+            }
+        }
+    }
+    
+    draw(mouseParticle, staticMassiveParticles) {
+        stroke(255);
+        strokeWeight(1);
+        for(var particle of this.particles) {
+
+            ellipse(mouseParticle.x, mouseParticle.y, 100, 100);
+            for(var staticMassiveParticle of staticMassiveParticles) {
+                ellipse(staticMassiveParticle.x, staticMassiveParticle.y, 100, 100);
+            }
+
+            point(particle.x, particle.y);
+        }
+    }
+}
