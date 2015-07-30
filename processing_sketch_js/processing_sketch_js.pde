@@ -96,41 +96,27 @@ public void mouseClicked() {
 
 
 //------------------------------------------------------------------------------------------
-import ddf.minim.spi.*;
-import ddf.minim.signals.*;
 import ddf.minim.*;
-import ddf.minim.analysis.*;
-import ddf.minim.ugens.*;
-import ddf.minim.effects.*;
 
-Minim       minim;
+Minim minim;
 AudioInput  accessMic;
-FFT         fft;
-
-
-//var mic;
 float micLevel;
-int loop;
+
 ParticleSystem particleSystem;
 ArrayList<Particle> staticMassiveParticles;
+
 boolean DEBUG = false;
 
 void setup() {
   size(640, 360, P3D);
-  background(255);
+
   staticMassiveParticles = new ArrayList<Particle>();
   frameRate(30);
-    
-  //microphone
-  //mic = new p5.AudioIn();
-  //fft = new p5.FFT();
-  //mic.start();
-  //mic.connect();
+
   minim = new Minim(this);
   accessMic = minim.getLineIn();
   micLevel = accessMic.mix.level();
   
-  loop = 0;
   particleSystem = new ParticleSystem();
   micLevel = 0;
 }
@@ -139,7 +125,6 @@ void draw() {
     fill(color(0, 0, 26, 255));
     rect(0,0, width, height);
     fill(255);
-    //micLevel = mic.getLevel();
     micLevel = accessMic.mix.level();
 
     stroke(255,255,255, 100);
@@ -152,19 +137,6 @@ void draw() {
           line( i, height/2 + accessMic.mix.get(i)*50, i+1, height/2 + accessMic.left.get(i+1)*50 );
         }
     }
-    
-    /*
-    var waveform = fft.analyze();
-    noFill();
-    if (DEBUG) {
-        beginShape();
-        for (var i = 0; i< waveform.length; i++){
-            var x = map(i, 0, waveform.length, 0, width);
-            var y = height - map( waveform[i], 0, 255, 0, height/2);
-            vertex(x,y);
-        }
-        endShape();
-    }*/
 
     Particle mouseParticle = new Particle(mouseX, mouseY, 0, 100000+ 10000000*micLevel);
     
