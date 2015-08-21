@@ -76,7 +76,7 @@ class ParticleSystem {
     
     public void draw(Particle mouseParticle, ArrayList<Particle> staticMassiveParticles) {
         stroke(255);
-        strokeWeight(1);
+        strokeWeight(4);
         noFill();
         for(Particle particle : this.particles) {
 
@@ -122,13 +122,15 @@ void setup() {
 }
 
 void draw() {
+    stroke(255,255,255, 100);
+    strokeWeight(0);
     fill(color(0, 0, 26, 255));
     rect(0,0, width, height);
     fill(255);
+
+
     micLevel = accessMic.mix.level();
 
-    stroke(255,255,255, 100);
-    strokeWeight(1);
     if (DEBUG) text(particleSystem.particles.size(), 10,10);
     if (DEBUG) rect(0, height, 3, -map(micLevel, 0, 1, 0, height));
     if (DEBUG) {
